@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/@gullerya/i18n.svg?label=npm%20@gullerya/i18n)](https://www.npmjs.com/package/@gullerya/i18n)
 [![Travis](https://travis-ci.org/gullerya/i18n.svg?branch=master)](https://travis-ci.org/gullerya/i18n)
 [![Codecov](https://img.shields.io/codecov/c/github/gullerya/i18n/master.svg)](https://codecov.io/gh/gullerya/i18n/branch/master)
-[![Codacy](https://img.shields.io/codacy/grade/d464e4d7653949939e66c32b73e51d6b.svg?logo=codacy)](https://www.codacy.com/app/gullerya/i18n)
+[![Codacy](https://img.shields.io/codacy/grade/2b0fe66aa5344be9aebab713b0a07f24.svg?logo=codacy)](https://www.codacy.com/app/gullerya/i18n)
 
 # Summary
 
