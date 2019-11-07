@@ -36,4 +36,5 @@ suite.runTest('inline - full flow', async test => {
 
 	await test.waitNextMicrotask();
 	test.assertEqual(divA.textContent, 'אפשרות א');
+	test.assertEqual(divB.textContent, '');
 });

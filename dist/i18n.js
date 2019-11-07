@@ -6,28 +6,34 @@ const
 			id: 'ar',
 			dir: 'rtl',
 			lang: 'ar',
-			label: 'عربى'
+			label: 'عربى',
+			required: false
 		},
 		{
 			id: 'en',
 			dir: 'ltr',
 			lang: 'en',
-			label: 'English'
+			label: 'English',
+			required: true
 		},
 		{
 			id: 'he',
 			dir: 'rtl',
 			lang: 'he',
-			label: 'עברית'
+			label: 'עברית',
+			required: false
 		},
 		{
 			id: 'ru',
 			dir: 'ltr',
 			lang: 'ru',
-			label: 'Русский'
+			label: 'Русский',
+			required: false
 		}
 	],
-	l10nCurrentModel = DataTier.ties.create('l10n', {}).model,
+	l10nCurrentModel = DataTier.ties.get('l10n')
+		? DataTier.ties.get('l10n').model
+		: DataTier.ties.create('l10n', {}).model,
 	resourcesMetadata = {};
 
 let currentLocale;
@@ -76,7 +82,7 @@ function setActiveLocale(locale) {
 	}
 }
 
-function initL10nPack(resourceId, resource) {
+async function initL10nPack(resourceId, resource) {
 	//	basic resource ID validation
 	if (!resourceId || typeof resourceId !== 'string') {
 		throw new Error('resource Id MUST be a non-empty string');
@@ -97,17 +103,17 @@ function initL10nPack(resourceId, resource) {
 	locales
 		.forEach(locale => {
 			//	validate per locale entry
-			if (locale.enforce && !(locale.id in resource)) {
+			if (locale.required && !(locale.id in resource)) {
 				throw new Error('resource "' + resourceId + '" missing ENTRY for the required locale "' + locale.id + '"');
 			}
-			if (locale.enforce && !resource[locale.id]) {
+			if (locale.required && !resource[locale.id]) {
 				throw new Error('resource "' + resourceId + '" has INVALID ENTRY for the required locale "' + locale.id + '"');
 			}
 		});
 
 	resourcesMetadata[resourceId] = resource;
 
-	applyL10n(resourceId);
+	await applyL10n(resourceId);
 }
 
 async function getL10n(resourceId) {
