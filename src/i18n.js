@@ -1,48 +1,44 @@
 import * as DataTier from './data-tier/data-tier.min.js';
-import { Observable } from './data-tier/object-observer.min.js';
 
 const
 	locales = [
 		{
 			id: 'ar',
 			dir: 'rtl',
-			order: 2,
-			label: 'عربى',
-			enforce: false
+			lang: 'ar',
+			label: 'عربى'
 		},
 		{
 			id: 'en',
 			dir: 'ltr',
-			order: 3,
-			label: 'English',
-			enforce: true
+			lang: 'en',
+			label: 'English'
 		},
 		{
 			id: 'he',
 			dir: 'rtl',
-			order: 1,
-			label: 'עברית',
-			enforce: true
+			lang: 'he',
+			label: 'עברית'
 		},
 		{
 			id: 'ru',
 			dir: 'ltr',
-			order: 4,
-			label: 'Русский',
-			enforce: false
+			lang: 'ru',
+			label: 'Русский'
 		}
 	],
 	l10nCurrentModel = DataTier.ties.create('l10n', {}).model,
 	resourcesMetadata = {};
 
-const currentLocale = Observable.from({});
+let currentLocale;
 
 export {
 	locales,
-	currentLocale,
+	getActiveLocale,
 	setActiveLocale,
-	initL10nResource,
+	initL10nPack,
 	getL10n,
+
 	stringifyDateTime,
 	roundNumber,
 	joinTexts
@@ -50,8 +46,14 @@ export {
 
 setActiveLocale('en');
 
+function getActiveLocale() {
+	return currentLocale;
+}
+
 function setActiveLocale(locale) {
-	if (!locale) throw new Error('invalid locale "' + locale + '"');
+	if (!locale) {
+		throw new Error('invalid locale "' + locale + '"');
+	}
 
 	const newLocale = typeof locale === 'object'
 		? locales.find(l => l === locale)
@@ -61,9 +63,9 @@ function setActiveLocale(locale) {
 		throw new Error('failed to match "' + locale + '" to any of known locales');
 	}
 
-	if (currentLocale.id !== newLocale.id) {
+	if (!currentLocale || currentLocale.id !== newLocale.id) {
 		//	set current locale
-		Object.assign(currentLocale, newLocale);
+		currentLocale = newLocale;
 
 		//	apply global styling
 		document.documentElement.lang = currentLocale.id;
@@ -74,7 +76,7 @@ function setActiveLocale(locale) {
 	}
 }
 
-function initL10nResource(resourceId, resource) {
+function initL10nPack(resourceId, resource) {
 	//	basic resource ID validation
 	if (!resourceId || typeof resourceId !== 'string') {
 		throw new Error('resource Id MUST be a non-empty string');
