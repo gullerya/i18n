@@ -20,12 +20,22 @@ suite.runTest('fetched - full flow', async test => {
 	i18n.setActiveLocale('en');
 
 	await test.waitNextMicrotask();
-	test.assertEqual(divA.textContent, 'Item A');
-	test.assertEqual(divB.textContent, 'Item B');
+	if (i18n.getActiveLocale.id === 'en') {
+		test.assertEqual(divA.textContent, 'Item A');
+		test.assertEqual(divB.textContent, 'Item B');
+	} else if (i18n.getActiveLocale.id === 'en') {
+		test.assertEqual(divA.textContent, 'פריט א');
+		test.assertEqual(divB.textContent, 'פריט ב');
+	}
 
 	i18n.setActiveLocale('he');
 
 	await test.waitNextMicrotask();
-	test.assertEqual(divA.textContent, 'פריט א');
-	test.assertEqual(divB.textContent, 'פריט ב');
+	if (i18n.getActiveLocale.id === 'en') {
+		test.assertEqual(divA.textContent, 'Item A');
+		test.assertEqual(divB.textContent, 'Item B');
+	} else if (i18n.getActiveLocale.id === 'en') {
+		test.assertEqual(divA.textContent, 'פריט א');
+		test.assertEqual(divB.textContent, 'פריט ב');
+	}
 });
