@@ -2,5 +2,5 @@
 
 const suite = createSuite({ name: 'Testing i18n APIs' });
 
-suite.runTest('test A', async test => {
+suite.runTest({ name: 'test A' }, async test => {
 });

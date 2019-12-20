@@ -16,6 +16,8 @@ process.stdout.write('\t\t\x1B[32mOK\x1B[0m' + os.EOL);
 process.stdout.write('installing "data-tier"...');
 fsExtra.emptyDirSync('./src/data-tier');
 fsExtra.copySync('./node_modules/data-tier/dist', './src/data-tier');
+fsExtra.removeSync('./src/data-tier/data-tier.js');
+fsExtra.removeSync('./src/data-tier/dt-utils.js');
 process.stdout.write('\t\x1B[32mOK\x1B[0m' + os.EOL);
 
 process.stdout.write('building "dist"...');

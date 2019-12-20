@@ -6,34 +6,28 @@ const
 			id: 'ar',
 			dir: 'rtl',
 			lang: 'ar',
-			label: 'عربى',
-			required: false
+			label: 'عربى'
 		},
 		{
 			id: 'en',
 			dir: 'ltr',
 			lang: 'en',
-			label: 'English',
-			required: true
+			label: 'English'
 		},
 		{
 			id: 'he',
 			dir: 'rtl',
 			lang: 'he',
-			label: 'עברית',
-			required: false
+			label: 'עברית'
 		},
 		{
 			id: 'ru',
 			dir: 'ltr',
 			lang: 'ru',
-			label: 'Русский',
-			required: false
+			label: 'Русский'
 		}
 	],
-	l10nCurrentModel = DataTier.ties.get('l10n')
-		? DataTier.ties.get('l10n').model
-		: DataTier.ties.create('l10n', {}).model,
+	l10nModel = DataTier.ties.create('l10n'),
 	resourcesMetadata = {};
 
 let currentLocale;
@@ -43,11 +37,7 @@ export {
 	getActiveLocale,
 	setActiveLocale,
 	initL10nPack,
-	getL10n,
-
-	stringifyDateTime,
-	roundNumber,
-	joinTexts
+	getL10n
 }
 
 setActiveLocale('en');
@@ -82,13 +72,13 @@ function setActiveLocale(locale) {
 	}
 }
 
-async function initL10nPack(resourceId, resource) {
+async function initL10nPack(key, resource) {
 	//	basic resource ID validation
-	if (!resourceId || typeof resourceId !== 'string') {
-		throw new Error('resource Id MUST be a non-empty string');
+	if (!key || typeof key !== 'string') {
+		throw new Error('key MUST be a non-empty string');
 	}
-	if (Object.prototype.hasOwnProperty.call(resourcesMetadata, resourceId)) {
-		throw new Error('l10n resource under ID "' + resourceId + '" has already been registered');
+	if (Object.prototype.hasOwnProperty.call(resourcesMetadata, key)) {
+		throw new Error('l10n resource keyed "' + key + '" has already been registered');
 	}
 
 	//	basic resource validation
@@ -104,22 +94,22 @@ async function initL10nPack(resourceId, resource) {
 		.forEach(locale => {
 			//	validate per locale entry
 			if (locale.required && !(locale.id in resource)) {
-				throw new Error('resource "' + resourceId + '" missing ENTRY for the required locale "' + locale.id + '"');
+				throw new Error('resource "' + key + '" missing ENTRY for the required locale "' + locale.id + '"');
 			}
 			if (locale.required && !resource[locale.id]) {
-				throw new Error('resource "' + resourceId + '" has INVALID ENTRY for the required locale "' + locale.id + '"');
+				throw new Error('resource "' + key + '" has INVALID ENTRY for the required locale "' + locale.id + '"');
 			}
 		});
 
-	resourcesMetadata[resourceId] = resource;
+	resourcesMetadata[key] = resource;
 
-	await applyL10n(resourceId);
+	await applyL10n(key);
 }
 
-async function getL10n(resourceId) {
+async function getL10n(key) {
 	const
 		clId = currentLocale.id,
-		resourceMetadata = resourcesMetadata[resourceId];
+		resourceMetadata = resourcesMetadata[key];
 	if (resourceMetadata) {
 		if (typeof resourceMetadata[clId] === 'object') {
 			return resourceMetadata[clId];
@@ -131,63 +121,21 @@ async function getL10n(resourceId) {
 				resourceMetadata[clId] = contents;
 				return contents;
 			} else {
-				console.error('failed to fetch l10n for locale "' + clId + '", resource "' + resourceId + '" by path "' + resourceMetadata[clId] + '"');
+				console.error('failed to fetch l10n for locale "' + clId + '", resource "' + key + '" by path "' + resourceMetadata[clId] + '"');
 				return null;
 			}
 		} else {
-			throw new Error('no data found for locale "' + clId + '", resource "' + resourceId + '"');
+			throw new Error('no data found for locale "' + clId + '", resource "' + key + '"');
 		}
 	} else {
-		throw new Error('l10n data was not registered for "' + resourceId + '"');
+		throw new Error('l10n data was not registered for "' + key + '"');
 	}
 }
 
 async function applyL10n(resourceId) {
 	try {
-		l10nCurrentModel[resourceId] = await getL10n(resourceId);
+		l10nModel[resourceId] = await getL10n(resourceId);
 	} catch (e) {
 		console.error('failed to apply l10n change for "' + resourceId + '"', e);
-	}
-}
-
-function stringifyDateTime(dateTime, pattern) {
-	if (!dateTime || !(dateTime instanceof Date)) {
-		throw new Error('illagal date/time parameter provided ' + dateTime);
-	}
-
-	if (!pattern || pattern === 'dd/mm/yyyy') {
-		return dateTime.getDate().toString().padStart(2, '0') +
-			'/' +
-			(dateTime.getMonth() + 1).toString().padStart(2, '0') +
-			'/' +
-			dateTime.getFullYear();
-	} else {
-		return null;
-	}
-}
-
-function roundNumber(value, decimalDigits) {
-	const n = typeof value === 'string'
-		? parseFloat(value)
-		: value;
-
-	if (typeof n !== 'number' || isNaN(n)) {
-		console.error('invalid argument "' + value + '", returning is as is');
-		return value;
-	}
-
-	if (typeof decimalDigits === 'number') {
-		const multiplier = Math.pow(10, decimalDigits);
-		return Math.round(n * multiplier) / multiplier;
-	} else {
-		return n;
-	}
-}
-
-function joinTexts(texts) {
-	switch (currentLocale.id) {
-		case 'en': return texts.join(' and ');
-		case 'he': return texts.join(' ו');
-		default: return texts.join(', ');
 	}
 }

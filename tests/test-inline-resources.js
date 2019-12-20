@@ -3,8 +3,9 @@ import * as i18n from '../dist/i18n.js';
 
 const suite = createSuite({ name: 'Testing i18n - inline l10n resources' });
 
-suite.runTest('inline - full flow', async test => {
-	i18n.initL10nPack('testInlineA', {
+suite.runTest({ name: 'inline - full flow', sync: true }, async test => {
+	const packKey = test.getRandom(8);
+	i18n.initL10nPack(packKey, {
 		en: {
 			menu: {
 				optionA: 'Option A',
@@ -21,8 +22,8 @@ suite.runTest('inline - full flow', async test => {
 	const
 		divA = document.createElement('div'),
 		divB = document.createElement('div');
-	divA.dataset.tie = 'l10n:testInlineA.menu.optionA';
-	divB.dataset.tie = 'l10n:testInlineA.menu.optionB';
+	divA.dataset.tie = `l10n:${packKey}.menu.optionA`;
+	divB.dataset.tie = `l10n:${packKey}.menu.optionB`;
 	document.body.appendChild(divA);
 	document.body.appendChild(divB);
 
