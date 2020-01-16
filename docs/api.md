@@ -1,6 +1,14 @@
 # API
 
-### `definePack(packKey, sources, options)`
+Below is the list of the exports of `i18n` library:
+* [`definePack(packKey, sources, options)`](#definepack)
+* `setActiveLocale(locale)`
+* `getActiveLocale()`
+* `events`
+* `setNamespace(namespace)`
+
+## <a id="definepack">`definePack(packKey, sources, options)`</a> 
+
 Defines/registers localization data (translations) for the specified component (pack).
 
 Parameters:
@@ -13,7 +21,7 @@ Parameters:
 		* `function` - parameterless function, expected to return localization data graph; may be `sync` or `async`
 * `options` - object, reserved, __optional__
 
-> Although unlikely, mentioned methods of different localization data provisioning may be used in mixture of consumer's choice, as in the examplee below.
+> Although unlikely, mentioned methods of different localization data provisioning may be used in any mixture of the consumer's choice, as in the example below.
 
 Example:
 ```javascript

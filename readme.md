@@ -29,7 +29,7 @@ Main aspects:
   * Initial implementation
 
 # API
-TODO
+Refer to this [documentation](docs/api.md).
 
 # Usage
 
