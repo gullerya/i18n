@@ -13,7 +13,7 @@ suite.runTest({ name: 'mixed - full flow', sync: true }, async test => {
 		enPack = { menu: { itemA: 'Option A', itemB: 'Option B' } },
 		ruPack = { menu: { itemA: 'Russian A', itemB: 'Russian B' } };
 
-	await i18n.definePack(packKey, {
+	i18n.definePack(packKey, {
 		en: enPack,
 		he: 'i18nPacks/component-a-he.json',
 		ru: () => ruPack

@@ -6,12 +6,14 @@
 
 # Summary
 
-__`i18n`__ is a client (browser) oriented library providing an easy means to quickly localize web sites; `i18n` is capable of handling complex web-component based sites with the same easiness as a simple 'flat' ones.
+__`i18n`__ is a client (browser) oriented library providing an easy means to quickly internationalize web sites.
+As of now the library takes care of __translation__ aspect only. Other kinds of formatting / symboling needs might be considered as per future needs.
+`i18n` is capable of handling complex web-component based sites with the same easiness as a simple 'flat' ones.
 
 Main aspects:
-* this `i18n` library implemented as a classic service from consumer perspective - import it and use the JS APIs and correlated HTML syntax
+* `i18n` library implemented as a classic service from consumer perspective - import it and use the JS APIs and correlated HTML syntax
 * `i18n` library is component-design oriented: each component can and should take care of its own needs
-    > Sharing or resources is super easy, to be sure, but me myself almost always consider it to be a best practice to strive to self contained, isolated, independent components, even if in this case it means sacrificing some network and memory
+    > Sharing of resources is super easy, to be sure. But me myself almost always consider it to be a best practice to strive to a self contained, isolated, independent components, even if in this case it means sacrificing some network and memory.
 * data binding part is powered by [`data-tier`](https://www.npmjs.com/package/data-tier) engine
 * the whole work performed client side, localization data may be provided in inline fashion or fetched as static resources requested from the backend
     * JSON resource format supported
@@ -20,19 +22,42 @@ Main aspects:
 
 #### Last versions (full changelog is [here](docs/changelog.md))
 
+* __0.1.1__
+  * Next take - mostly finalized APIs
+
 * __0.0.1__
   * Initial implementation
 
 # API
-`i18n` library consists of a ...
+TODO
 
-#### import:
+# Usage
+
+Generally, it is highly advised to read some of the [`data-tier`](https://www.npmjs.com/package/data-tier) documentation. Being an underlying engine, it has everything needed to understand usage and internals of `i18n`.
+
 Import the library as in example below:
 ```javascript
-import { ... } from './dist/i18n.min.js';
+import * as i18n from './dist/i18n.min.js';
 ```
 
-# Typical usage example
-The flow below exemplifies typical usage of the library:
+Define your language data per component as following:
 ```javascript
+i18n.definePack(packKey, {
+		en: { ...},                     //  inlining data
+		he: '/i18n/about-he.json',      //  fetched resource
+		ru: () => { ... }               //  function returning data
+	}, options);
 ```
+
+Parameters description (`sources` stands for the second parameter):
+* `packKey` - unique key per component/pack, required
+* `sources` - sources of localized texts, required
+    * `JSON`, keys of which considered to be a locale keys
+    * properties values may be either 
+* `options` - reserved, optional
+
+> Under component I mean any level of segregation up to consumers arbitrary choice. One may define such a pack for each and every micro part in UI, other may throw together all of the language data for the whole site.
+
+> Pro tip: it really makes sense to split/pack i18n data according to the components visibility, so that 'About' page texts, for example, won't be dealt with until actually navigated to.
+
+Use the following syntax in your `HTML` resources
