@@ -1,13 +1,13 @@
 # API
 
 Below is the list of the exports of `i18n` library:
-* [`definePack(packKey, sources, options)`](#definepack)
-* `setActiveLocale(locale)`
-* `getActiveLocale()`
-* `events`
-* `setNamespace(namespace)`
+* [`definePack(packKey, sources, options)`](#define-pack)
+* [`setActiveLocale(locale)`](#set-active)
+* [`getActiveLocale()`](#get-active)
+* [`events`](#events)
+* [`setNamespace(namespace)`](#set-ns)
 
-## <a id="definepack">`definePack(packKey, sources, options)`</a> 
+## <a id="define-pack">`definePack(packKey, sources, options)`</a>
 
 Defines/registers localization data (translations) for the specified component (pack).
 
@@ -26,8 +26,20 @@ Parameters:
 Example:
 ```javascript
 i18n.definePack(packKey, {
-		en: { ...},                     //  inlining data
-		he: '/i18n/about-he.json',      //  fetched resource
-		ru: () => { ... }               //  function returning data
-	}, options);
+	en: { ...},                     //  inlining data
+	he: '/i18n/about-he.json',      //  fetched resource
+	ru: () => { ... }               //  function returning data
+}, options);
 ```
+
+## <a id="set-active">`setActiveLocale(locale)`</a>
+TBD
+
+## <a id="get-active">`getActiveLocale()`</a>
+TBD
+
+## <a id="events">`events`</a>
+TBD
+
+## <a id="set-ns">`setNamespace(namespace)`</a>
+TBD
