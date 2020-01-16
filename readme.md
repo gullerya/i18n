@@ -60,4 +60,11 @@ Parameters description (`sources` stands for the second parameter):
 
 > Pro tip: it really makes sense to split/pack i18n data according to the components visibility, so that 'About' page texts, for example, won't be dealt with until actually navigated to.
 
-Use the following syntax in your `HTML` resources
+Use the following syntax in your `HTML` resources:
+```html
+<span data-tie="i18n:packKey.path.to.text"></span>
+```
+Let's break that attribute to the parts to get is clear:
+* `i18n` - is the default tying namespace, you can change it via `setNamespace` API; the namespace is __global__ for the whole application
+* `packKey` - first token in the path to the localized text is the component / pack key, used when the internatiolization resources was defined
+* `path.to.text` - rest of the path is just a path within the localization data graph
