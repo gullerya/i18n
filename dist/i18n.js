@@ -75,7 +75,7 @@ async function setActiveLocale(locale) {
 	if (!currentLocale || currentLocale.key !== newLocale.key) {
 		//	set current locale
 		const eventDetails = {
-			now: newLocale,
+			current: newLocale,
 			previous: currentLocale
 		};
 		currentLocale = newLocale;

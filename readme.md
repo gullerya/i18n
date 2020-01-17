@@ -22,7 +22,7 @@ Main aspects:
 
 #### Last versions (full changelog is [here](docs/changelog.md))
 
-* __0.1.1__
+* __0.1.0__
   * Next take - mostly finalized APIs
 
 * __0.0.1__
