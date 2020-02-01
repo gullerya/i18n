@@ -1,8 +1,8 @@
-﻿import { createSuite } from '../node_modules/just-test/dist/just-test.min.js'
+﻿import { getSuite } from '../node_modules/just-test/dist/just-test.min.js'
 import * as i18n from '../dist/i18n.js?ns=fetched';
 
 const
-	suite = createSuite({ name: 'Testing i18n - fetched resources' }),
+	suite = getSuite({ name: 'Testing i18n - fetched resources' }),
 	ns = 'i18nFetched';
 
 i18n.setNamespace(ns);
