@@ -1,6 +1,6 @@
 {
   "name": "@gullerya/i18n",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "client (browser) oriented internationalization library",
   "keywords": [
     "internationalization",
@@ -45,7 +45,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-node": "^11.0.0",
     "fs-extra": "^8.1.0",
-    "just-test": "^2.2.0",
+    "just-test": "^2.2.1",
     "uglify-es": "^3.3.9"
   }
 }
