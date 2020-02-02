@@ -16,12 +16,7 @@ class Locale {
 
 const
 	DEFAULT_NAMESPACE = 'i18n',
-	locales = [
-		new Locale('ar', 'rtl', 'ar', 'عربى'),
-		new Locale('en', 'ltr', 'en', 'English'),
-		new Locale('he', 'rtl', 'he', 'עברית'),
-		new Locale('ru', 'ltr', 'ru', 'Русский')
-	],
+	locales = DataTier.ties.get('i18nLocales') || DataTier.ties.create('i18nLocales', []),
 	events = new EventTarget(),
 	LOCALE_SET_EVENT = 'localeSet',
 	LOCALE_APPLIED_EVENT = 'localeApplied',
@@ -36,6 +31,7 @@ export {
 	setNamespace,
 	locales,
 	definePack,
+	addLocale,
 	getActiveLocale,
 	setActiveLocale,
 	events,
@@ -43,11 +39,17 @@ export {
 	LOCALE_APPLIED_EVENT
 }
 
+if (!locales.length) {
+	addLocale('en', 'ltr', 'en', 'English');
+	addLocale('he', 'rtl', 'he', 'עברית');
+	addLocale('ru', 'ltr', 'ru', 'Русский');
+	addLocale('ar', 'rtl', 'ar', 'عربى');
+}
 setActiveLocale('en');
 
 function setNamespace(newNS) {
 	if (!newNS || typeof newNS !== 'string') {
-		throw new Error(`invalid namespace "${newNS}"`);
+		throw new Error(`invalid namespace '${newNS}'`);
 	}
 	if (newNS === namespace) {
 		return;
@@ -55,6 +57,15 @@ function setNamespace(newNS) {
 
 	i18nData = DataTier.ties.create(newNS, i18nData || {});
 	namespace = newNS;
+}
+
+function addLocale(key, dir, lang, label) {
+	if (locales.some(l => l.key === key)) {
+		throw new Error(`locale '${key}' already exists`);
+	}
+
+	const l = new Locale(key, dir, lang, label);
+	locales.push(l);
 }
 
 function getActiveLocale() {

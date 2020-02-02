@@ -1,6 +1,6 @@
 {
   "name": "@gullerya/i18n",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "client (browser) oriented internationalization library",
   "keywords": [
     "internationalization",
