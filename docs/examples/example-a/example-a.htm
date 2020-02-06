@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>i18n - Example A</title>
+	<link rel="stylesheet" type="text/css" href="./example-a.css" />
+</head>
+
+<body>
+	<div class="main-header">
+		<div class="main-menu">
+			<span class="item" data-tie="i18n:mainMenu.welcome"></span>
+			<span class="item" data-tie="i18n:mainMenu.settings"></span>
+			<span class="item" data-tie="i18n:mainMenu.about"></span>
+			<span class="item" data-tie="i18n:mainMenu.help"></span>
+		</div>
+		<l10n-select class="l10n-selector" data-tie="updateLocales(i18nLocales)"></l10n-select>
+	</div>
+
+	<script type="module" src="./example-a-app.js"></script>
+</body>
+
+</html>

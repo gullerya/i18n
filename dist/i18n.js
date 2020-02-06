@@ -95,8 +95,7 @@ async function setActiveLocale(locale) {
 		events.dispatchEvent(new CustomEvent(LOCALE_SET_EVENT, { detail: eventDetails }));
 
 		//	apply global styling
-		document.documentElement.lang = currentLocale.key;
-		document.body.dir = currentLocale.dir;
+		Object.assign(document.documentElement, { lang: currentLocale.lang, dir: currentLocale.dir });
 
 		//	apply new locale to any registered component
 		const allApplied = [];
@@ -161,7 +160,7 @@ async function getI18nData(localeKey, packKey) {
 		}
 
 		if (typeof packLocaleData === 'object') {
-			result = packMeta[localeKey];
+			result = packLocaleData;
 		} else if (typeof packLocaleData === 'function') {
 			result = await Promise.resolve(packLocaleData());
 		} else if (typeof packLocaleData === 'string') {
@@ -183,5 +182,7 @@ async function getI18nData(localeKey, packKey) {
 }
 
 function ensureI18nDataStore() {
-	return i18nData || DataTier.ties.create(namespace);
+	if (!i18nData) {
+		i18nData = DataTier.ties.create(namespace);
+	}
 }

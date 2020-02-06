@@ -17,8 +17,11 @@ Main aspects:
 * data binding part is powered by [`data-tier`](https://www.npmjs.com/package/data-tier) engine
 * the whole work performed client side, localization data may be provided in inline fashion or fetched as static resources requested from the backend
     * JSON resource format supported
+    * contact me for other formats support
 
-#### Support matrix: ![CHROME](docs/browser_icons/chrome.png)<sub>61+</sub> | ![FIREFOX](docs/browser_icons/firefox.png)<sub>60+</sub> | ![EDGE](docs/browser_icons/edge.png)<sub>16+</sub>
+#### Support matrix
+
+![CHROME](docs/browser_icons/chrome.png)<sub>61+</sub> | ![FIREFOX](docs/browser_icons/firefox.png)<sub>60+</sub> | ![EDGE](docs/browser_icons/edge-chromium.png)<sub>79+</sub>
 
 #### Last versions (full changelog is [here](docs/changelog.md))
 
@@ -29,9 +32,10 @@ Main aspects:
   * Initial implementation
 
 # API
-Refer to this [documentation](docs/api.md).
 
-# Usage
+APIs described in this [documentation](docs/api.md).
+
+# Basic usage example
 
 Generally, it is highly advised to read some of the [`data-tier`](https://www.npmjs.com/package/data-tier) documentation. Being an underlying engine, it has everything needed to understand usage and internals of `i18n`.
 
@@ -43,7 +47,7 @@ import * as i18n from './dist/i18n.min.js';
 Define your language data per component as following:
 ```javascript
 i18n.definePack(packKey, {
-		en: { ...},                     //  inlining data
+		en: { ... },                    //  inlining data
 		he: '/i18n/about-he.json',      //  fetched resource
 		ru: () => { ... }               //  function returning data
 	}, options);
@@ -68,3 +72,8 @@ Let's break that attribute to the parts to get is clear:
 * `i18n` - is the default tying namespace, you can change it via `setNamespace` API; the namespace is __global__ for the whole application
 * `packKey` - first token in the path to the localized text is the component / pack key, used when the internatiolization resources was defined
 * `path.to.text` - rest of the path is just a path within the localization data graph
+
+# Links
+
+* [API definitions](docs/api.md)
+* [Example 1 - end to end working example](docs/examples/example-a/example-a.md)

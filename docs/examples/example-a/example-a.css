@@ -1,0 +1,43 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main-header {
+	width: 100%;
+	height: 72px;
+	display: flex;
+	align-items: center;
+	background-color: #eef;
+	border-bottom: 1px solid #dde;
+}
+
+.main-menu {
+	flex: 1;
+	margin: 0 24px;
+	display: flex;
+	align-items: center;
+}
+
+.main-menu .item {
+	margin: 0 24px;
+}
+
+.l10n-selector {
+	margin: 0 24px;
+	display: flex;
+}
+
+.l10n-selector > .native-select {
+	padding: 6px;
+	border: none;
+	border-radius: 6px;
+	background-color: #dde;
+	outline: none;
+}
+
+.l10n-selector > .native-select > option {
+	color: #447;
+	background-color: #fff;
+}
